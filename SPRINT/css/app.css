@@ -40,8 +40,8 @@ table {
 
 }
 
-.selected {
-    background: linear-gradient(to top, black, orange);
+.emptyCell {
+    background: linear-gradient(to top, rgb(220, 197, 197), rgb(232, 221, 200));
 }
 
 /* position: absolute; */

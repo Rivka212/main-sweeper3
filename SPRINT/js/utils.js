@@ -1,34 +1,46 @@
 'use strict'
 
-function renderBoard(board, selector) {
+function renderBoard() {
     var strHTML = ''
-    var strHTML = '<table><tbody>'
-    for (var i = 0; i < board.length; i++) {
-        strHTML += '<tr>'
-        for (var j = 0; j < board[0].length; j++) {
-            const cell = board[i][j]
+    var strHTML = `<table><tbody>`
+    for (var i = 0; i < gBoard.length; i++) {
+        strHTML += `<tr>\n`
+        for (var j = 0; j < gBoard[0].length; j++) {
+            const cell = gBoard[i][j]
 
             var className = `cell cell-${i}-${j}`
+            
+             className = (cell.isMarked) ? '&#127987' : ''
+            className += (cell.minesAroundCount) ? 'cell.minesAroundCount' : ''
 
-            strHTML += `<td class="cell-click ${className}" onclick="onCellclicked(this, ${i}, ${j})" >
-            </td>`
+            strHTML += `\t<td class="cell ${className}" onclick="onCellclicked(this, ${i}, ${j})" >
+            </td>\n`
         }
-        strHTML += '</tr>'
+        strHTML +=  `</tr>\n`
     }
-    strHTML += '</tbody></table>'
+     strHTML +=  `</tbody></table>`
+
+    const elBoard = document.querySelector('.board')
+    elBoard.innerHTML = strHTML
     const elCells = document.querySelector('.board-cells')
     elCells.innerHTML = strHTML
-    const elContainer = document.querySelector(selector)
-    elContainer.innerHTML = strHTML
+  
 }
 
 
-// location is an object like this - { i: 2, j: 7 }
 function renderCell(location, value) {
-    // Select the elCell and set the value
-    const elCell = document.querySelector(`.board-cells`)
+    const cellSelector = '.' + getClassName(location) 
+    const elCell = document.querySelector(cellSelector)
     elCell.innerHTML = value
-}
+  }
+  
+
+
+function getClassName(location) {
+    const cellClass = 'cell-' + location.i + '-' + location.j
+    return cellClass
+  }
+
 
 
 function getRandomColor() {
